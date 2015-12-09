@@ -1,7 +1,7 @@
-meteor-roles
+clinical-roles
 ============
 
-Authorization package for Meteor - compatible with built-in accounts package.
+Roles based authorization package for Meteor - compatible with built-in accounts package; forked from ``aldeed:roles``.
 
 <br />
 
@@ -111,7 +111,7 @@ if (Roles.userIsInRole(joesUserId, ['manage-team', 'super-admin'], 'real-madrid.
 † The type of the `roles` field depends on whether or not groups are used:
 ```js
 Roles.addUsersToRoles(bobsUserId, ['manage-team','schedule-game'])
-// internal representation - no groups 
+// internal representation - no groups
 // user.roles = ['manage-team','schedule-game']
 
 Roles.addUsersToRoles(joesUserId, ['manage-team','schedule-game'], 'manchester-united.com')
@@ -120,7 +120,7 @@ Roles.addUsersToRoles(joesUserId, ['player','goalie'], 'real-madrid.com')
 // NOTE: MongoDB uses periods to represent hierarchy so periods in group names
 //   are converted to underscores.
 //
-// user.roles = { 
+// user.roles = {
 //   'manchester-united_com': ['manage-team','schedule-game'],
 //   'real-madrid_com': ['player','goalie']
 // }
@@ -133,7 +133,7 @@ Roles.addUsersToRoles(joesUserId, ['player','goalie'], 'real-madrid.com')
 
 ```js
 // in server/publish.js
-Meteor.publish(null, function (){ 
+Meteor.publish(null, function (){
   return Meteor.roles.find({})
 })
 ```
@@ -168,7 +168,7 @@ Meteor.publish(null, function (){
     ```
 
 2. Install [Meteorite][1]
-  
+
 3. Add this smart package to your project.  From a command prompt:
     ```bash
     mrt add roles
@@ -209,7 +209,7 @@ var users = [
 
 _.each(users, function (user) {
   var id;
-  
+
   id = Accounts.createUser({
     email: user.email,
     password: "apple1",
@@ -217,7 +217,7 @@ _.each(users, function (user) {
   });
 
   if (user.roles.length > 0) {
-    // Need _id of existing user record so this call must come 
+    // Need _id of existing user record so this call must come
     // after `Accounts.createUser` or `Accounts.onCreate`
     Roles.addUsersToRoles(id, user.roles, 'default-group');
   }
@@ -237,15 +237,15 @@ Check user roles before publishing sensitive data:
 // Give authorized users access to sensitive data by group
 Meteor.publish('secrets', function (group) {
   if (Roles.userIsInRole(this.userId, ['view-secrets','admin'], group)) {
-    
+
     return Meteor.secrets.find({group: group});
-    
+
   } else {
-    
+
     // user not authorized. do not publish secrets
     this.stop();
     return;
-  
+
   }
 });
 ```
@@ -258,7 +258,7 @@ Accounts.validateNewUser(function (user) {
   var loggedInUser = Meteor.user();
 
   if (Roles.userIsInRole(loggedInUser, ['admin','manage-users'])) {
-    // NOTE: This example assumes the user is not using groups. 
+    // NOTE: This example assumes the user is not using groups.
     return true;
   }
 
@@ -275,7 +275,7 @@ Prevent access to certain functionality, such as deleting a user:
 Meteor.methods({
   /**
    * delete a user from a specific group
-   * 
+   *
    * @method deleteUser
    * @param {String} targetUserId _id of user to delete
    * @param {String} group Company to update permissions for
@@ -284,7 +284,7 @@ Meteor.methods({
     var loggedInUser = Meteor.user()
 
     if (!loggedInUser ||
-        !Roles.userIsInRole(loggedInUser, 
+        !Roles.userIsInRole(loggedInUser,
                             ['manage-users', 'support-staff'], group)) {
       throw new Meteor.Error(403, "Access denied")
     }
@@ -315,7 +315,7 @@ Meteor.methods({
     var loggedInUser = Meteor.user()
 
     if (!loggedInUser ||
-        !Roles.userIsInRole(loggedInUser, 
+        !Roles.userIsInRole(loggedInUser,
                             ['manage-users', 'support-staff'], group)) {
       throw new Meteor.Error(403, "Access denied")
     }
@@ -331,7 +331,7 @@ Meteor.methods({
 
 Client javascript has access to all the same Roles functions as the server with the addition of a `isInRole` handlebars helper which is automatically registered by the Roles package.
 
-As with all Meteor applications, client-side checks are a convenience, rather than a true security implementation 
+As with all Meteor applications, client-side checks are a convenience, rather than a true security implementation
 since Meteor bundles the same client-side code to all users.  Providing the Roles functions client-side also allows for latency compensation during Meteor method calls.
 
 NOTE: Any sensitive data needs to be controlled server-side to prevent unwanted disclosure. To be clear, Meteor sends all templates, client-side javascript, and published data to the client's browser.  This is by design and is a good thing.  The following example is just sugar to help improve the user experience for normal users.  Those interested in seeing the 'admin_nav' template in the example below will still be able to do so by manually reading the bundled `client.js` file. It won't be pretty but it is possible. But this is not a problem as long as the actual data is restricted server-side.
@@ -404,7 +404,7 @@ The `examples` directory contains Meteor apps which show off the following featu
 The only difference among the example apps is which routing package is used.
 
 View the `meteor-router` example app online @  <a href="http://roles.meteor.com/" target="_blank">http://roles.meteor.com/</a>
- 
+
 
 _Iron Router or Flow Router_
 
@@ -435,15 +435,15 @@ _Deprecated routing packages: Mini-Pages or Router_
 ### Tests
 
 
-To run tests: 
+To run tests:
   1. `cd meteor-roles`
   2. `meteor test-packages ./roles`
   3. point browser at http://localhost:3000/
 
 _NOTE_: If you see an error message regarding **"The package named roles does not exist"** that means you are either:
-  a) in the wrong directory or 
+  a) in the wrong directory or
   b) left off the './' in front of 'roles' in step 2.  
-  
+
 Step 2 needs to be run in the main 'meteor-roles' directory and the './' is needed because otherwise Meteor only looks in directories named 'packages'.
 
 
