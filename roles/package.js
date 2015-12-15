@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Authorization package for Meteor",
-  version: "2.2.14",
+  version: "2.3.0",
   git: "https://github.com/clinical-meteor/clinical-roles.git",
   name: "clinical:roles"
 });
@@ -8,7 +8,7 @@ Package.describe({
 Package.onUse(function (api) {
   var both = ['client', 'server'];
 
-  api.versionsFrom("METEOR@1.2.0.2");
+  api.versionsFrom("METEOR@1.1.0.3");
 
   api.use(['underscore',
            'accounts-base',
