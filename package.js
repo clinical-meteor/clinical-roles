@@ -18,13 +18,14 @@ Package.onUse(function (api) {
 
   api.use(['blaze'], 'client', {weak: true});
 
-  api.export('Roles');
 
-  api.addFiles('roles_server.js', 'server');
-  api.addFiles('roles_common.js', both);
   api.addFiles(['client/debug.js',
                 'client/uiHelpers.js',
                 'client/subscriptions.js'], 'client');
+  api.addFiles('lib/roles_common.js');
+  api.addFiles('server/roles_server.js', 'server');
+
+  api.export('Roles');
 });
 
 Package.onTest(function (api) {
