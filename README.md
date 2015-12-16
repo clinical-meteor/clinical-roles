@@ -152,7 +152,7 @@ Meteor.publish(null, function (){
 
 3. Add this package to your project.  From a command prompt:
     ```bash
-    meteor add alanning:roles
+    meteor add clinical:roles
     ```
 
 4. Run your application:

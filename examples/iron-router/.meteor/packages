@@ -8,6 +8,6 @@ accounts-password
 accounts-ui
 bootstrap
 spiderable
-alanning:roles
+clinical:roles
 iron:router
 alanning:trace

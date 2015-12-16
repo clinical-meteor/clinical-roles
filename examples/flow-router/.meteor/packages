@@ -7,7 +7,7 @@ accounts-password
 accounts-ui
 bootstrap
 spiderable
-alanning:roles
+clinical:roles
 kadira:flow-router
 kadira:blaze-layout
 alanning:trace

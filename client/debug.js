@@ -10,12 +10,12 @@
 //   localstorage.setItem('Roles.debug', true)
 //
 
-Roles.debug = false
+Roles.debug = false;
 
 if (localStorage) {
-  var temp = localStorage.getItem("Roles.debug")
+  var temp = localStorage.getItem("Roles.debug");
 
   if ('undefined' !== typeof temp) {
-    Roles.debug = !!temp
+    Roles.debug = !!temp;
   }
 }
