@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Authorization package for Meteor",
-  version: "2.4.2",
+  version: "2.4.3",
   git: "https://github.com/clinical-meteor/clinical-roles.git",
   name: "clinical:roles"
 });
