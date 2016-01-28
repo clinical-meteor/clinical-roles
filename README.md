@@ -1,12 +1,11 @@
-clinical-roles
-============
+clinical:roles
+================
 
 Roles based authorization package for Meteor - compatible with built-in accounts package; forked from ``aldeed:roles``.
 
-<br />
 
-<a name="toc">
-### Table of Contents
+=====================================
+#### Table of Contents
 * [Contributors](#user-content-contributors)
 * [Authorization](#user-content-authorization)
 * [Permissions vs roles](#user-content-naming)
@@ -19,33 +18,9 @@ Roles based authorization package for Meteor - compatible with built-in accounts
 * [Running tests](#user-content-testing)
 
 
-<br />
 
-
-<a name="contributors">
-### Contributors
-
-Thanks to:
-
-  * [@challett](https://github.com/challett)
-  * [@ianserlin](https://github.com/ianserlin)
-  * [@leebenson](https://github.com/leebenson)
-  * [@pward123](https://github.com/pward123)
-  * [@dandv](https://github.com/dandv)
-  * [@aldeed](https://github.com/aldeed)
-  * [@kevb](https://github.com/kevb)
-  * [@zimme](https://github.com/zimme)
-  * [@danieljonce](https://github.com/danieljonce)
-  * [@pascoual](https://github.com/pascoual)
-  * [@nickmoylan](https://github.com/nickmoylan)
-  * [@mcrider](https://github.com/mcrider)
-  * [@alanning](https://github.com/alanning)
-
-<br />
-
-
-<a name="authorization">
-### Authorization
+=====================================
+#### Authorization
 
 This package lets you attach permissions to a user which you can then check against later when deciding whether to grant access to Meteor methods or publish data.  The core concept is very simple, essentially you are attaching strings to a user object and then checking for the existance of those strings later. In some sense, it is very similar to tags on blog posts. This package provides helper methods to make the process of adding, removing, and verifying those permissions easier.
 
@@ -58,8 +33,8 @@ All versions of Meteor from 0.5 to current are supported (excluding Meteor 0.9.1
 
 <br />
 
-<a name="naming">
-### Permissions vs roles  (or What's in a name...)
+=====================================
+#### Permissions vs roles  (or What's in a name...)
 
 Although the name of this package is 'roles', you can define your permissions however you like.  They are essentially just tags that you assign on a user and which you can check for later.
 
@@ -67,8 +42,8 @@ You can have traditional roles like, "admin" or "webmaster", or you can assign m
 
 <br />
 
-<a name="groups">
-### What are "groups"?
+=====================================
+#### What are "groups"?
 
 Sometimes it's useful to let a user have independent sets of permissions.  The `roles` package calls these independent sets, "groups" for lack of a better term.  You can think of them as "partitions" if that is more clear.  Users can have one set of permissions in group A and another set of permissions in group B.  Let's go through an example of this using soccer/football teams as groups.
 
@@ -99,8 +74,8 @@ if (Roles.userIsInRole(joesUserId, ['manage-team', 'super-admin'], 'real-madrid.
 
 <br />
 
-<a name="changes">
-### Changes to default Meteor behavior
+=====================================
+#### Changes to default Meteor behavior
 
   1. User entries in the `Meteor.users` collection gain a new field named `roles` corresponding to the user's roles. †
   2. A new collection `Meteor.roles` contains a global list of defined role names. ††
@@ -138,12 +113,9 @@ Meteor.publish(null, function (){
 })
 ```
 
-<br />
 
-<a name="installing">
-### Installing
-
-#### Meteor 0.9 - latest
+=====================================
+#### Installing
 
 1. Add one of the built-in accounts packages so the Meteor.users collection exists.  From a command prompt:
     ```bash
@@ -160,34 +132,8 @@ Meteor.publish(null, function (){
     meteor
     ```
 
-#### Meteor 0.8.3 and below (meteorite)
-
-1. Add one of the built-in accounts packages so the Meteor.users collection exists.  From a command prompt:
-    ```bash
-    meteor add accounts-password
-    ```
-
-2. Install [Meteorite][1]
-
-3. Add this smart package to your project.  From a command prompt:
-    ```bash
-    mrt add roles
-    ```
-
-4. Run your application:
-    ```bash
-    meteor
-    ```
-
-
-NOTE for Meteor 0.8-0.8.3:  Manually add the 'ui' package to your '.meteor/packages' file so that roles knows you are using it.  Otherwise, the 'isInRole' client-side helper will not be registered.  Since some versions of Meteor had 'standard-app-packages' without 'ui' there is no other way to detect its use.
-
-
-<br />
-
-
-<a name="usage">
-### Usage Examples
+=====================================
+#### Usage Examples
 
 <br />
 
@@ -369,8 +315,8 @@ To check for permissions when using groups:
 <br />
 
 
-<a name="docs">
-### API Docs
+=====================================
+#### API Docs
 
 Online API docs found here: http://alanning.github.io/meteor-roles/classes/Roles.html
 
@@ -391,8 +337,8 @@ To serve documentation locally:
 <br />
 
 
-<a name="example-apps">
-### Example Apps
+=====================================
+#### Example Apps
 
 The `examples` directory contains Meteor apps which show off the following features:
 * Server-side publishing with authorization to secure sensitive data
@@ -431,8 +377,8 @@ _Deprecated routing packages: Mini-Pages or Router_
 <br />
 
 
-<a name="testing">
-### Tests
+=====================================
+#### Tests
 
 
 To run tests:
@@ -448,9 +394,33 @@ Step 2 needs to be run in the main 'meteor-roles' directory and the './' is need
 
 
 
-
-
-
 [1]: https://github.com/oortcloud/meteorite "Meteorite"
 
 [2]: http://yui.github.com/yuidoc/ "YUIDoc"
+
+
+=====================================
+#### Contributions
+
+Manuy thanks to:
+
+  * [@challett](https://github.com/challett)
+  * [@ianserlin](https://github.com/ianserlin)
+  * [@leebenson](https://github.com/leebenson)
+  * [@pward123](https://github.com/pward123)
+  * [@dandv](https://github.com/dandv)
+  * [@aldeed](https://github.com/aldeed)
+  * [@kevb](https://github.com/kevb)
+  * [@zimme](https://github.com/zimme)
+  * [@danieljonce](https://github.com/danieljonce)
+  * [@pascoual](https://github.com/pascoual)
+  * [@nickmoylan](https://github.com/nickmoylan)
+  * [@mcrider](https://github.com/mcrider)
+  * [@alanning](https://github.com/alanning)
+
+
+
+=======================================
+#### Licensing  
+
+![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
