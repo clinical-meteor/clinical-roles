@@ -4,13 +4,6 @@ describe('clinical:roles', function () {
   var client = browser(server);
   var newUserId = null;
 
-  // beforeEach(function () {
-  //   server.execute(function () {
-  //
-  //   }).then(function (value){
-  //
-  //   });
-  // });
   afterEach(function () {
     server.execute(function () {
       Roles.remove({});
