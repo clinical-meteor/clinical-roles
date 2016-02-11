@@ -1,7 +1,7 @@
 clinical:roles
 ================
 
-Roles based authorization package for Meteor - compatible with built-in accounts package; forked from ``aldeed:roles``.
+Roles based authorization package for Meteor - compatible with built-in accounts package; forked from ``alanning:meteor-roles``.
 
 
 =====================================
