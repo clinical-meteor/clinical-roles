@@ -24,15 +24,6 @@ Roles based authorization package for Meteor - compatible with built-in accounts
 
 This package lets you attach permissions to a user which you can then check against later when deciding whether to grant access to Meteor methods or publish data.  The core concept is very simple, essentially you are attaching strings to a user object and then checking for the existance of those strings later. In some sense, it is very similar to tags on blog posts. This package provides helper methods to make the process of adding, removing, and verifying those permissions easier.
 
-All versions of Meteor from 0.5 to current are supported (excluding Meteor 0.9.1).  UI-less apps are supported as well.
-
-    v1.1.0 - adds support for per-group assignment of permissions
-
-    v1.2.0 - adds the special Roles.GLOBAL_GROUP, used to provide blanket permissions across all groups
-
-
-<br />
-
 =====================================
 #### Permissions vs roles  (or What's in a name...)
 
@@ -40,7 +31,6 @@ Although the name of this package is 'roles', you can define your permissions ho
 
 You can have traditional roles like, "admin" or "webmaster", or you can assign more granular permissions such as, "view-secrets", "users.view", or "users.manage".  Often times more granular is actually better because you are able to handle all those pesky edge cases that come up in real-life usage without creating a ton of higher-level 'roles'.  To the roles package, it's all strings.
 
-<br />
 
 =====================================
 #### What are "groups"?
@@ -135,11 +125,8 @@ Meteor.publish(null, function (){
 =====================================
 #### Usage Examples
 
-<br />
 
 Here are some potential use cases:
-
-<br />
 
 -- **Server** --
 
@@ -147,16 +134,15 @@ Here are some potential use cases:
 Add users to roles:
 ```js
 var users = [
-      {name:"Normal User",email:"normal@example.com",roles:[]},
-      {name:"View-Secrets User",email:"view@example.com",roles:['view-secrets']},
-      {name:"Manage-Users User",email:"manage@example.com",roles:['manage-users']},
-      {name:"Admin User",email:"admin@example.com",roles:['admin']}
-    ];
+  {name:"Normal User",email:"normal@example.com",roles:[]},
+  {name:"View-Secrets User",email:"view@example.com",roles:['view-secrets']},
+  {name:"Manage-Users User",email:"manage@example.com",roles:['manage-users']},
+  {name:"Admin User",email:"admin@example.com",roles:['admin']}
+];
 
-_.each(users, function (user) {
-  var id;
 
-  id = Accounts.createUser({
+users.forEach(function(user){
+  let id = Accounts.createUser({
     email: user.email,
     password: "apple1",
     profile: { name: user.name }
@@ -167,14 +153,9 @@ _.each(users, function (user) {
     // after `Accounts.createUser` or `Accounts.onCreate`
     Roles.addUsersToRoles(id, user.roles, 'default-group');
   }
-
-});
+})
 ```
 
-<br />
-Note that the `Roles.addUsersToRoles` call needs to come _after_ `Accounts.createUser` or `Accounts.onCreate` or else the roles package won't be able to find the user record (since it hasn't been created yet).  This SO answer gives more detail: http://stackoverflow.com/a/22650399/219238
-
-<br />
 
 Check user roles before publishing sensitive data:
 ```js
@@ -271,110 +252,7 @@ Meteor.methods({
 })
 ```
 
-<br />
 
--- **Client** --
-
-Client javascript has access to all the same Roles functions as the server with the addition of a `isInRole` handlebars helper which is automatically registered by the Roles package.
-
-As with all Meteor applications, client-side checks are a convenience, rather than a true security implementation
-since Meteor bundles the same client-side code to all users.  Providing the Roles functions client-side also allows for latency compensation during Meteor method calls.
-
-NOTE: Any sensitive data needs to be controlled server-side to prevent unwanted disclosure. To be clear, Meteor sends all templates, client-side javascript, and published data to the client's browser.  This is by design and is a good thing.  The following example is just sugar to help improve the user experience for normal users.  Those interested in seeing the 'admin_nav' template in the example below will still be able to do so by manually reading the bundled `client.js` file. It won't be pretty but it is possible. But this is not a problem as long as the actual data is restricted server-side.
-
-
-To check for permissions when not using groups:
-
-```handlebars
-<!-- client/myApp.html -->
-
-<template name="header">
-  ... regular header stuff
-  {{#if isInRole 'admin'}}
-    {{> admin_nav}}  
-  {{/if}}
-  {{#if isInRole 'admin,editor'}}
-    {{> editor_stuff}}
-  {{/if}}
-</template>
-```
-
-To check for permissions when using groups:
-
-```handlebars
-<!-- client/myApp.html -->
-
-<template name="header">
-  ... regular header stuff
-  {{#if isInRole 'admin,editor' 'group1'}}
-    {{> editor_stuff}}  
-  {{/if}}
-</template>
-```
-
-<br />
-
-
-=====================================
-#### API Docs
-
-Online API docs found here: http://alanning.github.io/meteor-roles/classes/Roles.html
-
-API docs generated using [YUIDoc][2]
-
-To re-generate documentation:
-  1. install YUIDoc
-  2. `cd meteor-roles`
-  3. `yuidoc`
-
-To serve documentation locally:
-  1. install YUIDoc
-  2. `cd meteor-roles`
-  3. `yuidoc --server`
-  4. point browser at http://localhost:3000/
-
-
-<br />
-
-
-=====================================
-#### Example Apps
-
-The `examples` directory contains Meteor apps which show off the following features:
-* Server-side publishing with authorization to secure sensitive data
-* Client-side navigation with link visibility based on user permissions
-* 'Sign-in required' app with up-front login page using `accounts-ui`
-* Client-side routing
-
-
-The only difference among the example apps is which routing package is used.
-
-View the `meteor-router` example app online @  <a href="http://roles.meteor.com/" target="_blank">http://roles.meteor.com/</a>
-
-
-_Iron Router or Flow Router_
-
-  1. `git clone https://github.com/alanning/meteor-roles.git`
-  2. either
-    * `cd meteor-roles/examples/iron-router` or
-    * `cd meteor-roles/examples/flow-router`
-  3. `meteor`
-  4. point browser to `http://localhost:3000`
-
-<br />
-
-_Deprecated routing packages: Mini-Pages or Router_
-
-  1. install [Meteorite][1]
-  2. `git clone https://github.com/alanning/meteor-roles.git`
-  3. either
-    * `cd meteor-roles/examples/router` or
-    * `cd meteor-roles/examples/mini-pages`
-  4. `mrt update`
-  5. `meteor`
-  6. point browser to `http://localhost:3000`
-
-<br />
 
 
 =====================================

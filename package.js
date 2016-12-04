@@ -9,8 +9,10 @@ Package.onUse(function (api) {
 
   api.versionsFrom("METEOR@1.1.0.3");
 
-  api.use(['underscore',
-           'accounts-base',
+  api.use([
+           'meteor-platform',
+           'underscore',
+           'accounts-base@1.2.14',
            'tracker',
            'mongo',
            'check']);
